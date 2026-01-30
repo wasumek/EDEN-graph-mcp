@@ -1,0 +1,226 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="mb-8 text-center">
+    <h1 class="text-3xl font-bold text-gray-900">Healthy Longevity Incentive Alignment</h1>
+    <p class="mt-2 text-gray-600 max-w-2xl mx-auto">
+        A computational framework to map stakeholder incentives and identifying market positioning in the healthy
+        longevity ecosystem.
+    </p>
+</div>
+
+<!-- Tabs -->
+<div class="border-b border-gray-200 mb-6">
+    <nav class="-mb-px flex justify-center space-x-8" aria-label="Tabs">
+        <button onclick="switchTab('network')" id="tab-network"
+            class="tab-active whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+            Network Analysis
+        </button>
+        <button onclick="switchTab('market')" id="tab-market"
+            class="tab-inactive whitespace-nowrap py-4 px-1 border-b-2 border-transparent font-medium text-sm hover:text-gray-700 hover:border-gray-300">
+            Market Clustering
+        </button>
+    </nav>
+</div>
+
+<!-- Network Analysis Section -->
+<div id="content-network" class="block space-y-6">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Input -->
+        <div class="bg-white shadow sm:rounded-lg p-6 lg:col-span-1 border border-gray-200">
+            <h2 class="text-lg font-medium text-gray-900 mb-4">New Value Proposition</h2>
+            <div class="space-y-4">
+                <div>
+                    <label for="vp-input" class="block text-sm font-medium text-gray-700">Describe your
+                        intervention/service</label>
+                    <textarea id="vp-input" rows="6"
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-black focus:ring-black sm:text-sm p-3 border"
+                        placeholder="e.g., An app that uses AI to personalize nutrition..."></textarea>
+                </div>
+                <button onclick="generateMap()"
+                    class="w-full bg-black text-white px-4 py-2 rounded-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black">
+                    Analyze Alignment
+                </button>
+                <div id="ai-helper-area">
+                    <button onclick="improveIdea()" class="text-xs text-gray-500 hover:text-gray-700 underline mt-2">AI:
+                        Refine this concept</button>
+                </div>
+            </div>
+            <div id="suggestions-output" class="mt-6 text-sm text-gray-600 prose prose-sm hidden">
+                <!-- Recommendations will load here -->
+            </div>
+        </div>
+
+        <!-- Graph -->
+        <div class="bg-white shadow sm:rounded-lg p-6 lg:col-span-2 border border-gray-200 min-h-[500px]">
+            <div id="network-graph" class="w-full h-full flex items-center justify-center text-gray-400">
+                <p>Run analysis to visualize the ecosystem network.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Market Clustering Section -->
+<div id="content-market" class="hidden space-y-6">
+    <div class="bg-white shadow sm:rounded-lg p-6 border border-gray-200">
+        <h2 class="text-lg font-medium text-gray-900 mb-4">Venture Profiling</h2>
+        <form id="cluster-form" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Market Segment</label>
+                <select name="market_segment" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm border p-2">
+                    <option>Digital Therapeutics</option>
+                    <option>Monitoring & Diagnostics</option>
+                    <option>Care Support</option>
+                    <option>Clinical Software</option>
+                    <option>Health & Wellness</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Product Type</label>
+                <select name="product" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm border p-2">
+                    <option>App</option>
+                    <option>Platform</option>
+                    <option>Device</option>
+                    <option>Service</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Target Customer</label>
+                <select name="customer" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm border p-2">
+                    <option>Patients</option>
+                    <option>Providers</option>
+                    <option>Payers</option>
+                    <option>Pharma</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Founded Year (e.g., 2020)</label>
+                <input type="number" name="founded_year" value="2022"
+                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm border p-2">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Funding ($M)</label>
+                <input type="number" name="funding" step="0.1" value="1.5"
+                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm border p-2">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Employees</label>
+                <input type="number" name="employees" value="10"
+                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm border p-2">
+            </div>
+            <!-- Hidden fixed fields -->
+            <input type="hidden" name="investors" value="1">
+
+            <div class="md:col-span-3">
+                <button type="button" onclick="runClustering()"
+                    class="w-full bg-black text-white px-4 py-2 rounded-md hover:bg-gray-800">
+                    Run Market Analysis
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <div id="market-results" class="hidden space-y-6">
+        <div class="bg-white shadow sm:rounded-lg p-6 border border-gray-200">
+            <h3 class="text-md font-medium text-gray-900">Cluster Overview</h3>
+            <div id="overview-plot" class="w-full h-[600px]"></div>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div class="bg-white shadow sm:rounded-lg p-6 border border-gray-200">
+                <h3 class="text-md font-medium text-gray-900">Hierarchical Clustering</h3>
+                <div id="dendrogram-plot" class="w-full h-[500px]"></div>
+            </div>
+            <div class="bg-white shadow sm:rounded-lg p-6 border border-gray-200">
+                <h3 class="text-md font-medium text-gray-900">Peer Comparison</h3>
+                <div id="comparison-plot" class="w-full h-[500px]"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function switchTab(tab) {
+        // Toggle tab styles
+        document.getElementById('tab-network').className = tab === 'network' ? 'tab-active whitespace-nowrap py-4 px-1 border-b-2 border-black font-medium text-sm' : 'tab-inactive whitespace-nowrap py-4 px-1 border-b-2 border-transparent font-medium text-sm hover:text-gray-700 hover:border-gray-300';
+        document.getElementById('tab-market').className = tab === 'market' ? 'tab-active whitespace-nowrap py-4 px-1 border-b-2 border-black font-medium text-sm' : 'tab-inactive whitespace-nowrap py-4 px-1 border-b-2 border-transparent font-medium text-sm hover:text-gray-700 hover:border-gray-300';
+
+        // Toggle content
+        document.getElementById('content-network').className = tab === 'network' ? 'block space-y-6' : 'hidden space-y-6';
+        document.getElementById('content-market').className = tab === 'market' ? 'block space-y-6' : 'hidden space-y-6';
+    }
+
+    async function improveIdea() {
+        const text = document.getElementById('vp-input').value;
+        if (!text) return alert('Please enter some text first');
+
+        try {
+            const response = await fetch('/generate', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ What: text })
+            });
+            const result = await response.text();
+            alert('AI Insight: ' + result);
+        } catch (e) {
+            console.error(e);
+            alert('Error generating insight');
+        }
+    }
+
+    async function generateMap() {
+        const text = document.getElementById('vp-input').value;
+        if (!text) return alert('Enter a value proposition');
+
+        const container = document.getElementById('network-graph');
+        container.innerHTML = 'Loading...';
+
+        try {
+            const response = await fetch('/map', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ What: text })
+            });
+            const data = await response.json();
+
+            // Render Graph
+            Plotly.newPlot('network-graph', data.graph_data.data, data.graph_data.layout);
+
+            // Render Suggestions
+            const suggDiv = document.getElementById('suggestions-output');
+            suggDiv.innerHTML = marked.parse(data.suggestions); // Assuming marked is available or just text
+            // Markdown parsing check needed. For now simple text replacement
+            suggDiv.innerHTML = data.suggestions.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<b>$1</b>');
+            suggDiv.classList.remove('hidden');
+
+        } catch (e) {
+            console.error(e);
+            container.innerHTML = 'Error loading graph.';
+        }
+    }
+
+    async function runClustering() {
+        const form = document.getElementById('cluster-form');
+        const formData = new FormData(form);
+
+        try {
+            const response = await fetch('/analyze', {
+                method: 'POST',
+                body: formData
+            });
+            const data = await response.json();
+
+            if (data.error) return alert(data.error);
+
+            document.getElementById('market-results').classList.remove('hidden');
+
+            if (data.overview) Plotly.newPlot('overview-plot', JSON.parse(data.overview).data, JSON.parse(data.overview).layout);
+            if (data.dendrogram) Plotly.newPlot('dendrogram-plot', JSON.parse(data.dendrogram).data, JSON.parse(data.dendrogram).layout);
+            if (data.comparison) Plotly.newPlot('comparison-plot', JSON.parse(data.comparison).data, JSON.parse(data.comparison).layout);
+
+        } catch (e) {
+            console.error(e);
+            alert('Error running analysis');
+        }
+    }
+</script>
+{% endblock %}

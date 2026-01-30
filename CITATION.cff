@@ -1,0 +1,35 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+  - family-names: "Mekniran"
+    given-names: "Wasu"
+    orcid: "https://orcid.org/0000-0001-5184-0438"
+    affiliation: "ETH Zurich / University of St. Gallen"
+  - family-names: "Kowatsch"
+    given-names: "Tobias"
+    affiliation: "University of St. Gallen / ETH Zurich"
+title: "EDEN: Towards a Computational Framework to Align Incentives in Healthy Aging"
+version: 1.0.0
+doi: "10.5220/0013359800003911"
+date-released: 2025-02-23
+url: "https://www.biostec.org/"
+preferred-citation:
+  type: conference-paper
+  authors:
+  - family-names: "Mekniran"
+    given-names: "Wasu"
+  - family-names: "Kowatsch"
+    given-names: "Tobias"
+  title: "EDEN: Towards a Computational Framework to Align Incentives in Healthy Aging"
+  year: 2025
+  collection-title: "Proceedings of the 18th International Joint Conference on Biomedical Engineering Systems and Technologies - Vol 2: HEALTHINF"
+  editor:
+  - family-names: "Fred"
+    given-names: "Ana"
+  - family-names: "Pernice"
+    given-names: "Riccardo"
+  pages: 1067-1076
+  publisher:
+    name: "ScitePress"
+  doi: "10.5220/0013359800003911"
+license: MIT
