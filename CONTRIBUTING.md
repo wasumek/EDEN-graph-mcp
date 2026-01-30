@@ -24,13 +24,9 @@ This repository follows standard open-source research practices:
 3.  **Pull Request**: Submit a PR with a detailed description of the methodological improvement or data addition.
 
 ## Translational Impact & Financial Disclosure
-EDEN is a research initiative developed under the aegis of the **Centre for Digital Health Interventions (CDHI)** at **ETH Zurich** and the **University of St. Gallen**.
+EDEN is a research initiative developed at the **Centre for Digital Health Interventions (CDHI)** at **ETH Zurich** and the **University of St. Gallen**.
 
-The framework is designed to produce "investor-grade" analytics—rigorous, data-driven insights capable of informing capital allocation in the longevity economy. Scaling this impact requires transparency regarding our strategic partners:
-
-*   **CSS**: Supporting research into the "Future of Health" and incentive alignment.
-*   **MavieNext**: Providing domain expertise in business model verification.
-*   **MTIP**: Advising on the healthtech investment landscape.
+The framework is designed to produce "investor-grade" analytics—rigorous, data-driven insights capable of informing capital allocation in the longevity economy. Scaling this impact requires transparency regarding our strategic partners: CSS, Supporting research and funding in part
 
 ## Licensing
 By contributing, you agree that your code will be licensed under the **MIT License** to ensure maximum reproducibility and reusability by the scientific community.
